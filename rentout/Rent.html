@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Annunci di Case</title>
+<link rel="stylesheet" href="../style.css"> <!-- File CSS per lo stile della pagina -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script> <!-- Carica Vue.js -->
+</head>
+<style>
+    
+    .annuncio-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly; /* Distribuisce gli annunci uniformemente nelle righe */
+    }
+    
+    .annuncio {
+        width: calc(33.33% - 20px); /* Utilizziamo il 33.33% per definire le tre colonne */
+        margin-bottom: 20px;
+        border: 1px solid #c7c7c7;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    
+    .annuncio img {
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center; /* Centra i pulsanti orizzontalmente */
+        align-items: center; /* Centra i pulsanti verticalmente */
+        margin-top: 20px; /* Aggiunge spazio sopra i pulsanti */
+    }
+    
+    /* Stile dei pulsanti di paginazione */
+    .pagination button {
+        margin: 0 5px; /* Aggiunge spazio tra i pulsanti */
+    }
+
+    @media (max-width: 768px) {
+        .annuncio-container,.annuncio,.annuncio img{width: 100%;}
+    
+    
+        .reverse{flex-direction: column-reverse;} /* per invertire gli elementi della griglia solo su mobile, cos� quando scorro appare prima l'immagine e poi le scritte */
+      
+    }
+    
+    
+</style>
+<body class="body">
+    <!--VERSIONE MOBILE GLI ANNUNCI SFANCULANO RISOLVI-->
+    <header class="header">
+
+        <a href="../index.html"><img src="../immagini/logo1.png" alt="OCR Logo" class="logo"> </a> 
+    
+        <nav class="menu"> <!-- tag di navigazione -->
+          <ul>
+            <li> <a href="../index.html"> Home </a></li>
+            <li> <a href="Rent.html"> Rent </a></li>
+            <li> <a href="RentOut.html"> Rent Out </a></li>
+            <li> <a href="../chat.html"> Chat</a></li>
+            <li> <a href="../contact.html"> Contact </a></li>
+          </ul>
+        </nav>
+        <a href="../login/Login_SignUp.html" class="button"> Login/SignUp </a>
+        
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+        </div>
+    
+      </header>
+<br>
+<div id="app">
+    <div class="annuncio-container">
+        <div class="annuncio" v-for="annuncio in annunci" :key="annuncio.id">
+            <!--<img :src="'data:image/jpeg;base64,' + annuncio.immagine" alt="Immagine annuncio">-->
+            <img :src="annuncio.image_path" alt="Immagine annuncio" style="width: 200px; height: 150px;">
+            <!--<img v-bind:src="image">-->
+            <div class="details">
+                <span class="price"><strong>${{ annuncio.prezzo }}</strong></span>
+                <p><strong>Indirizzo:</strong> {{ annuncio.indirizzo }}</p>
+                <p><strong>Città:</strong> {{ annuncio.città }}</p>
+                <p><strong>Numero di camere:</strong> {{ annuncio.numero_camere }}</p>
+                <!-- Aggiungi altri dettagli dell'annuncio qui -->
+            </div>
+        </div>
+    </div>
+    <div class="pagination">
+        <button @click="prevPage" :disabled="page === 1">Precedente</button>
+        <span>Pagina {{ page }}</span>
+        <button @click="nextPage" :disabled="annunci.length < itemsPerPage">Successivo</button>
+    </div>
+</div>
+<!-- Jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+<script script src="../scripts.js"></script>
+<script>
+new Vue({
+    el: '#app',
+    data: {
+        annunci: [],
+        page: 1,
+        itemsPerPage: 10 // Numero di annunci per pagina
+    },
+    mounted() {
+        this.getAnnunci();
+    },
+    methods: {
+        getAnnunci() {
+            fetch(`recupera_annunci.php?page=${this.page}`)
+            .then(response => response.json())
+            .then(data => {
+                this.annunci = data;
+            })
+            .catch(error => console.error('Errore:', error));
+        },
+        nextPage() {
+            this.page++;
+            this.getAnnunci();
+        },
+        prevPage() {
+            this.page--;
+            this.getAnnunci();
+        }
+    }
+});
+</script>
+
+</body>
+</html>

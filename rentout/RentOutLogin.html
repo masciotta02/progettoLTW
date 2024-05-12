@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestione Annunci</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+
+<style>
+/* Stili CSS per la pagina */
+/* Puoi personalizzare questi stili per adattarli al tuo design */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="number"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+</style>
+</head>
+<body>
+    <!--INSERISCE LA VALIDAFORM -->
+    <header class="header">
+
+        <a href="../login/indexLogin.html"><img src="../immagini/logo1.png" alt="OCR Logo" class="logo"> </a> 
+    
+        <nav class="menu"> <!-- tag di navigazione -->
+          <ul>
+            <li> <a href="../login/indexLogin.html"> Home </a></li>
+            <li> <a href="./RentLogin.html"> Rent </a></li>
+            <li> <a href="./RentOutLogin.html"> Rent Out </a></li>
+            <li> <a href="../chat.html"> Chat</a></li>
+            <li> <a href="../contact.html"> Contact </a></li>
+          </ul>
+        </nav>
+        <!--<a href="../login/Login_SignUp.html" class="button"> Login/SignUp </a>-->
+        
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+        </div>
+    
+      </header>
+<div class="container">
+    <h1>Gestione Annunci</h1>
+<form method="post" action="add_path.php" enctype="multipart/form-data">
+    <input type="text" name="indirizzo" placeholder="Indirizzo" required><br>
+    <input type="text" name="citta" placeholder="Città" required><br>
+    <input type="number" name="prezzo" placeholder="Prezzo" required><br>
+    <input type="number" name="camere" placeholder="Numero di camere" required><br>
+    <input type="number" name="metriQuadri" placeholder="Metri quadrati" required><br>
+    <textarea name="descrizione" placeholder="Descrizione" required></textarea><br>
+    <input type="tel" name="telefono" placeholder="Numero di telefono" required><br>
+    <input type="file" name="immagine" accept="image/*" required><br>
+    <button type="submit">Aggiungi Annuncio</button>
+</form>
+</div>
+<!-- Jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+<script script src="../scripts.js"></script>
+<script>
+// JavaScript per la gestione degli annunci
+document.getElementById("annuncioForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Evita il comportamento predefinito del modulo
+
+    // Pulisce il modulo dopo l'aggiunta dell'annuncio
+    document.getElementById("annuncioForm").reset();
+});
+</script>
+
+</body>
+</html>
